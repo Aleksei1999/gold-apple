@@ -53,7 +53,8 @@ type Props = {
   focus?: [number[], number[]];
   // на вертикальном экране не растягивать кадр на всю высоту: ширина кадра = scale × ширина экрана,
   // центр по высоте в доле y, края кадра растворяются в цвет фона matte
-  portrait?: { scale: number; y: number; matte: string };
+  // ramp: кадры, на которых вид плавно переходит от «на весь экран» к этому режиму
+  portrait?: { scale: number; y: number; matte: string; ramp?: [number, number] };
   label?: string;
   className?: string;
   children?: (progress: MotionValue<number>) => ReactNode;
@@ -122,9 +123,13 @@ export function ScrollSequence({
       const ctx = c.getContext('2d');
       if (!img || !ctx) return;
       const tall = portrait && c.width < c.height;
-      const s = tall
-        ? (c.width * portrait.scale) / img.naturalWidth
-        : Math.max(c.width / img.naturalWidth, c.height / img.naturalHeight);
+      const cover = Math.max(c.width / img.naturalWidth, c.height / img.naturalHeight);
+      let t = tall ? 1 : 0;
+      if (tall && portrait.ramp) {
+        const [r0, r1] = portrait.ramp;
+        t = Math.min(1, Math.max(0, (index - r0) / (r1 - r0)));
+      }
+      const s = tall ? cover + ((c.width * portrait.scale) / img.naturalWidth - cover) * t : cover;
       const w = img.naturalWidth * s;
       const h = img.naturalHeight * s;
       let fx = 0.5;
@@ -137,14 +142,15 @@ export function ScrollSequence({
       }
       // сдвигаем кадр так, чтобы точка fx встала в центр, но без пустых полос по краям
       const x = Math.min(0, Math.max(c.width - w, c.width / 2 - fx * w));
-      const y = tall ? c.height * portrait.y - h / 2 : (c.height - h) / 2;
+      const cy = c.height * (0.5 + ((tall ? portrait.y : 0.5) - 0.5) * t);
+      const y = cy - h / 2;
       if (tall) {
         ctx.fillStyle = portrait.matte;
         ctx.fillRect(0, 0, c.width, c.height);
       }
       ctx.drawImage(img, x, y, w, h);
-      if (tall) {
-        const edge = h * 0.16;
+      if (tall && t > 0) {
+        const edge = h * 0.16 * t;
         for (const [from, to] of [
           [y, y + edge],
           [y + h, y + h - edge],

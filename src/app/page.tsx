@@ -1,11 +1,11 @@
 import { Footer } from '@/components/blocks/Footer';
 import { Header } from '@/components/blocks/Header';
-import { GlassHero } from '@/components/GlassHero';
+import { Flight } from '@/components/Flight';
 import { Reveal } from '@/components/motion/Reveal';
-import { ScentsFlight } from '@/components/ScentsFlight';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Image } from '@/components/ui/Image';
+import { Words } from '@/components/Words';
 import { SCENTS } from '@/site.config';
 
 export default function Home() {
@@ -13,14 +13,13 @@ export default function Home() {
     <>
       <Header />
       <main className="overflow-x-clip">
-        <GlassHero />
-        <ScentsFlight />
+        <Flight />
 
         <section data-theme="light" id="find" className="bg-bg py-[var(--section-y)] text-fg">
           <Container>
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <h2 className="display-script max-w-[11ch] text-[clamp(2.75rem,1.4rem+5vw,6rem)]">
-                Who do you want to be today?
+                <Words text="Who do you want to be today?" />
               </h2>
               <p className="max-w-[34ch] text-muted">
                 Same bottle, same gold apple on top. What changes is the person who wears it.
@@ -63,7 +62,7 @@ export default function Home() {
             </Reveal>
             <div className="md:col-span-6 md:col-start-7">
               <h2 className="display-script max-w-[10ch] text-[clamp(2.75rem,1.4rem+5vw,6rem)]">
-                A gold apple on every bottle
+                <Words text="A gold apple on every bottle" />
               </h2>
               <div className="mt-8 space-y-4 text-fg/80">
                 <p>
@@ -98,9 +97,11 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
           <Container className="absolute inset-x-0 top-[calc(var(--header-h)+1rem)] flex justify-between gap-6 md:top-[16%]">
-            <p className="display-script text-[clamp(2.5rem,1rem+6vw,7.5rem)]">Wear</p>
+            <p className="display-script text-[clamp(2.5rem,1rem+6vw,7.5rem)]">
+              <Words text="Wear" />
+            </p>
             <p className="display-script text-right text-[clamp(2.5rem,1rem+6vw,7.5rem)]">
-              your gold
+              <Words text="your gold" delay={0.25} />
             </p>
           </Container>
           <Container className="absolute inset-x-0 bottom-8 flex justify-center">
