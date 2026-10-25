@@ -79,7 +79,9 @@ function Chapter({
       <Container className="grid gap-6 md:grid-cols-12 md:items-end">
         <div className="md:col-span-7">
           <p className="text-small uppercase tracking-[0.2em] text-fg/75">{scent.mood}</p>
-          <h2 className="display-caps mt-3 text-[clamp(3rem,1.4rem+6.5vw,7.5rem)]">{scent.name}</h2>
+          <h2 className="display-script mt-3 text-[clamp(3rem,1.4rem+6.5vw,7.5rem)]">
+            {scent.name}
+          </h2>
         </div>
         <div className="max-md:hidden md:col-span-4 md:col-start-9">
           <p className="text-body text-fg/85">{scent.text}</p>

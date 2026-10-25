@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Archivo } from 'next/font/google';
+import { Archivo, Pinyon_Script } from 'next/font/google';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { site } from '@/site.config';
 import './globals.css';
@@ -10,6 +10,14 @@ const display = Archivo({
   subsets: ['latin'],
   axes: ['wdth'],
   variable: '--ff-display',
+  display: 'swap',
+});
+
+// рукописный каллиграфический шрифт для заголовков и логотипа
+const script = Pinyon_Script({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--ff-script',
   display: 'swap',
 });
 
@@ -42,7 +50,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={site.lang} className={`${display.variable} ${body.variable}`}>
+    <html lang={site.lang} className={`${display.variable} ${body.variable} ${script.variable}`}>
       <body>
         <SmoothScroll />
         {children}

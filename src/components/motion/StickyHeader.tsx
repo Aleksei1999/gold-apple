@@ -11,11 +11,19 @@ type Props = {
   transparentAtTop?: boolean;
   // прятать при прокрутке вниз, показывать при прокрутке вверх
   autoHide?: boolean;
+  // всегда без подложки: текст и кнопка поверх картинки
+  alwaysClear?: boolean;
   className?: string;
 };
 
 // берёт тему секции, которая сейчас под шапкой: тёмный блок — светлый текст, и наоборот
-export function StickyHeader({ children, transparentAtTop = true, autoHide, className }: Props) {
+export function StickyHeader({
+  children,
+  transparentAtTop = true,
+  autoHide,
+  alwaysClear,
+  className,
+}: Props) {
   const [theme, setTheme] = useState<Theme>('light');
   const [atTop, setAtTop] = useState(true);
   const [hidden, setHidden] = useState(false);
@@ -53,7 +61,7 @@ export function StickyHeader({ children, transparentAtTop = true, autoHide, clas
     };
   }, [autoHide]);
 
-  const clear = transparentAtTop && atTop;
+  const clear = alwaysClear || (transparentAtTop && atTop);
 
   return (
     <header

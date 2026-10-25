@@ -32,13 +32,13 @@
     outline-offset: 3px;
   }
 
-  .display-caps {
-    font-family: var(--font-display-family);
-    font-stretch: 62%;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    line-height: 0.88;
+  .display-script {
+    font-family: var(--ff-script), cursive;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.02;
+    /* у каллиграфии маленькие строчные: крупнее того же кегля гротеска */
+    font-size-adjust: 0.42;
   }
 
   ::selection {

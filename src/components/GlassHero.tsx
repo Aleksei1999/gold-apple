@@ -50,7 +50,7 @@ function Intro({ progress }: { progress: MotionValue<number> }) {
           <p className="text-small font-medium uppercase tracking-[0.2em] text-fg/70">
             Gold Apple · Eau de Parfum
           </p>
-          <h1 className="display-caps mt-4 max-w-[9ch] text-[clamp(3.25rem,1.6rem+7vw,8.5rem)]">
+          <h1 className="display-script mt-4 max-w-[9ch] text-[clamp(3.25rem,1.6rem+7vw,8.5rem)]">
             Every scent reveals a new you
           </h1>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">

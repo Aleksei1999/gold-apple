@@ -19,7 +19,7 @@ export default function Home() {
         <section data-theme="light" id="find" className="bg-bg py-[var(--section-y)] text-fg">
           <Container>
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <h2 className="display-caps max-w-[11ch] text-[clamp(2.75rem,1.4rem+5vw,6rem)]">
+              <h2 className="display-script max-w-[11ch] text-[clamp(2.75rem,1.4rem+5vw,6rem)]">
                 Who do you want to be today?
               </h2>
               <p className="max-w-[34ch] text-muted">
@@ -40,7 +40,7 @@ export default function Home() {
                   </div>
                   <div className="mt-4 flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full" style={{ background: s.tint }} />
-                    <h3 className="display-caps text-[1.75rem]">{s.name}</h3>
+                    <h3 className="display-script text-[1.75rem]">{s.name}</h3>
                   </div>
                   <p className="mt-2 text-small text-muted">{s.notes.join(' · ')}</p>
                   <p className="mt-1 text-small text-muted">Eau de Parfum · 50 ml</p>
@@ -62,7 +62,7 @@ export default function Home() {
               />
             </Reveal>
             <div className="md:col-span-6 md:col-start-7">
-              <h2 className="display-caps max-w-[10ch] text-[clamp(2.75rem,1.4rem+5vw,6rem)]">
+              <h2 className="display-script max-w-[10ch] text-[clamp(2.75rem,1.4rem+5vw,6rem)]">
                 A gold apple on every bottle
               </h2>
               <div className="mt-8 space-y-4 text-fg/80">
@@ -97,9 +97,9 @@ export default function Home() {
             className="min-h-[80svh] object-cover md:min-h-[70svh]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
-          <Container className="absolute inset-x-0 top-[calc(var(--header-h)+1rem)] flex justify-between gap-6 md:top-[8%]">
-            <p className="display-caps text-[clamp(2.5rem,1rem+6vw,7.5rem)]">Wear</p>
-            <p className="display-caps text-right text-[clamp(2.5rem,1rem+6vw,7.5rem)]">
+          <Container className="absolute inset-x-0 top-[calc(var(--header-h)+1rem)] flex justify-between gap-6 md:top-[16%]">
+            <p className="display-script text-[clamp(2.5rem,1rem+6vw,7.5rem)]">Wear</p>
+            <p className="display-script text-right text-[clamp(2.5rem,1rem+6vw,7.5rem)]">
               your gold
             </p>
           </Container>

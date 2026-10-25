@@ -9,7 +9,7 @@ export function Footer() {
       <Container>
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-6">
-            <p className="display-caps text-[clamp(3rem,1.5rem+6vw,7rem)]">{site.name}</p>
+            <p className="display-script text-[clamp(3rem,1.5rem+6vw,7rem)]">{site.name}</p>
             <p className="mt-4 max-w-[36ch] text-small text-muted">{site.tagline}.</p>
           </div>
           <nav aria-label="Sections" className="md:col-span-3 md:col-start-8 md:pt-4">

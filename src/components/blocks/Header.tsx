@@ -22,9 +22,9 @@ export function Header({ transparentAtTop = true }: { transparentAtTop?: boolean
   }, [open]);
 
   return (
-    <StickyHeader transparentAtTop={transparentAtTop && !open}>
+    <StickyHeader transparentAtTop={transparentAtTop && !open} alwaysClear={!open}>
       <div className="mx-auto flex h-full max-w-[var(--container)] items-center justify-between gap-6 px-[var(--gutter)]">
-        <Link href="/" className="display-caps text-[1.75rem] leading-none">
+        <Link href="/" className="display-script text-[2.25rem] leading-none">
           {site.name}
         </Link>
 
