@@ -25,7 +25,8 @@
   --fg-muted: #b1a89b;
   --heading: #f3eee6;
   --line: rgb(243 238 230 / 0.16);
-  --accent: #d2ad62;
+  /* кнопки на тёмном — белые */
+  --accent: #ffffff;
   --accent-fg: #0c0b0a;
   --focus: #d2ad62;
   --danger: #f2877e;

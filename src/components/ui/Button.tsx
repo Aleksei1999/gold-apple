@@ -13,7 +13,7 @@ type AsButton = Common & { href?: undefined } & Omit<
   >;
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-accent text-accent-fg hover:bg-fg hover:text-bg',
+  primary: 'bg-accent text-accent-fg hover:opacity-85',
   secondary: 'border border-fg/30 text-fg hover:border-fg hover:bg-fg hover:text-bg',
   ghost: 'text-fg underline decoration-fg/30 underline-offset-[6px] hover:decoration-fg',
 };
@@ -26,8 +26,8 @@ const sizes: Record<Size, string> = {
 
 export function buttonClass({ variant = 'primary', size = 'md', className }: Partial<Common>) {
   return cn(
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium',
-    'transition-colors duration-200 ease-out disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium',
+    'transition-[color,background-color,opacity] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50',
     variant === 'ghost' ? 'h-auto px-0' : sizes[size],
     variants[variant],
     className,
