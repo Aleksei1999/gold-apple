@@ -3,6 +3,7 @@
 import { motion, useMotionValueEvent, useTransform, type MotionValue } from 'framer-motion';
 import { useState } from 'react';
 import { ScrollSequence } from '@/components/motion/ScrollSequence';
+import { asset } from '@/lib/asset';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/cn';
 import { SCENTS, type Scent } from '@/site.config';
@@ -20,7 +21,7 @@ const PORTRAIT = { scale: 1.9, y: 0.4, matte: '#0c0b0a' };
 
 // сцены сменяются на кадрах 0, 64, 128, 191, 254; прокрутка без остановок
 const RANGES: [number, number][] = [
-  [0, 0.11],
+  [0.03, 0.12],
   [0.17, 0.3],
   [0.4, 0.53],
   [0.63, 0.76],
@@ -29,7 +30,8 @@ const RANGES: [number, number][] = [
 
 export function ScentsFlight() {
   return (
-    <div id="scents">
+    // наезжает на последний экран первого блока: стекло растворяется прямо в первую сцену
+    <div id="scents" className="relative z-10 -mt-[100svh]">
       <ScrollSequence
         frames={{ dir: '/scents', count: COUNT }}
         length={14}
@@ -45,7 +47,7 @@ export function ScentsFlight() {
               <Chapter key={s.id} scent={s} progress={p} range={RANGES[i]} last={i === 4} />
             ))}
             <Strip progress={p} />
-            <GlowOut progress={p} />
+            <GlassOut progress={p} />
           </>
         )}
       </ScrollSequence>
@@ -68,9 +70,9 @@ function Chapter({
   const opacity = useTransform(
     progress,
     last ? [a, a + edge] : [a, a + edge, b - edge, b],
-    last ? [0, 1] : [a === 0 ? 1 : 0, 1, 1, 0],
+    last ? [0, 1] : [0, 1, 1, 0],
   );
-  const y = useTransform(progress, [a, a + edge], [a === 0 ? 0 : 30, 0]);
+  const y = useTransform(progress, [a, a + edge], [30, 0]);
   return (
     <motion.div
       style={{ opacity, y }}
@@ -127,13 +129,22 @@ function Strip({ progress }: { progress: MotionValue<number> }) {
   );
 }
 
-// начинаем из той же золотой вспышки, которой закончился первый экран
-function GlowOut({ progress }: { progress: MotionValue<number> }) {
-  const opacity = useTransform(progress, [0, 0.035], [1, 0]);
+// последний кадр стекла поверх первой сцены: размывается и тает, пар уступает место золотой комнате
+function GlassOut({ progress }: { progress: MotionValue<number> }) {
+  const opacity = useTransform(progress, [0.004, 0.06], [1, 0]);
+  const blur = useTransform(progress, [0.004, 0.05], ['blur(0px)', 'blur(18px)']);
+  const scale = useTransform(progress, [0.004, 0.06], [1, 1.06]);
   return (
-    <motion.div
-      style={{ opacity }}
-      className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_55%_45%,#fff3d1_0%,#f0c46e_45%,#b07a2a_100%)]"
-    />
+    <motion.div style={{ opacity }} className="pointer-events-none absolute inset-0">
+      <motion.img
+        src={asset('/glass/095.webp')}
+        alt=""
+        aria-hidden
+        style={{ filter: blur, scale }}
+        className="absolute inset-0 h-full w-full object-cover object-[56%_50%]"
+      />
+      {/* то же затемнение слева, что у первого блока, иначе на стыке кадр мигнёт */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
+    </motion.div>
   );
 }

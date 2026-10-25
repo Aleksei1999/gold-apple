@@ -17,7 +17,7 @@ export function GlassHero() {
     <ScrollSequence
       frames={{ dir: '/glass', count: 96 }}
       length={4}
-      // ладонь протирает стекло за первые три экрана, последний экран — золотая вспышка
+      // ладонь протирает стекло за первые три экрана, на последний наезжает блок ароматов
       keyframes={[
         [0, 0.72],
         [0, 95],
@@ -30,7 +30,6 @@ export function GlassHero() {
         <>
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
           <Intro progress={p} />
-          <Glow progress={p} />
         </>
       )}
     </ScrollSequence>
@@ -68,16 +67,5 @@ function Intro({ progress }: { progress: MotionValue<number> }) {
         Scroll to wipe the glass
       </motion.p>
     </>
-  );
-}
-
-// пар на стекле разгорается золотом: этим же светом открывается следующий блок
-function Glow({ progress }: { progress: MotionValue<number> }) {
-  const opacity = useTransform(progress, [0.7, 0.93], [0, 1]);
-  return (
-    <motion.div
-      style={{ opacity }}
-      className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_55%_45%,#fff3d1_0%,#f0c46e_45%,#b07a2a_100%)]"
-    />
   );
 }
