@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 import { ease } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 
-// слова выезжают снизу из-под маски по очереди: при загрузке (onMount) или когда блок в кадре
+// слова проявляются из размытия и чуть поднимаются, по очереди: при загрузке (onMount) или когда блок в кадре
 export function Words({
   text,
   className,
@@ -20,7 +20,8 @@ export function Words({
   const reduced = useReducedMotion();
   const words = text.split(' ');
   if (reduced) return <span className={className}>{text}</span>;
-  const shown = { y: '0%', opacity: 1, filter: 'blur(0px)' };
+  // после появления фильтр снимаем совсем, чтобы ничего не подрезал
+  const shown = { y: '0em', opacity: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } };
   return (
     <motion.span
       className={cn('inline', className)}
@@ -33,11 +34,11 @@ export function Words({
       {words.map((w, i) => (
         // пробел снаружи маски: внутри inline-block он схлопывается
         <Fragment key={i}>
-          {/* pb/-mb: хвосты каллиграфии не обрезаются маской */}
-          <span className="-mb-[0.25em] inline-block overflow-hidden pb-[0.25em] pr-[0.08em] align-bottom">
+          {/* без overflow-hidden: росчерки каллиграфии выходят за строку и маска их режет */}
+          <span className="inline-block">
             <motion.span
               className="inline-block"
-              variants={{ hidden: { y: '110%', opacity: 0, filter: 'blur(6px)' }, shown }}
+              variants={{ hidden: { y: '0.35em', opacity: 0, filter: 'blur(10px)' }, shown }}
               transition={{ duration: 0.9, ease: ease.out }}
             >
               {w}
@@ -61,7 +62,10 @@ export function ScrollWrite({
   range: [number, number];
 }) {
   const reveal = useTransform(progress, [a, b], [100, 0]);
-  const clipPath = useTransform(reveal, (v) => `inset(-0.3em ${v}% -0.4em -0.2em)`);
+  // запас 1em со всех сторон под росчерки; открытая надпись без маски вовсе
+  const clipPath = useTransform(reveal, (v) =>
+    v <= 0.5 ? 'none' : `inset(-1em calc(${v}% - ${((100 - v) / 100).toFixed(2)}em) -1em -1em)`,
+  );
   const filter = useTransform(progress, [a, b], ['blur(4px)', 'blur(0px)']);
   return (
     <motion.span style={{ clipPath, filter }} className="inline-block">
